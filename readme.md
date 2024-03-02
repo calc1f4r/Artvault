@@ -1,10 +1,10 @@
-# ArtVault
+# 🎨 ArtVault 🕸️
 
 ArtVault aims to bring transparency and efficiency to the art market by creating a digital record of ownership that can be validated by anyone with access to the blockchain. This eliminates the need for intermediaries in the art market and makes it easier for investors to buy and sell shares of artwork without the usual barriers of high transaction costs and lengthy legal processes.
 
 Furthermore, ArtVault's platform offers an innovative way for artists to monetize their work through the creation of digital shares. This allows them to retain ownership of their artwork while still benefiting from its appreciation in value.
 
-## Features
+## Features 😸
 
 - **ERC721 Tokenization**: ArtVault utilizes the ERC721 standard to tokenize physical paintings, ensuring each artwork is represented as a unique and indivisible asset on the blockchain.
 - **Non-Fungible Ownership:** With ArtVault, users can securely own and transfer digital representations of physical paintings, enabling fractional ownership and trading of high-value artworks.
@@ -14,7 +14,7 @@ Furthermore, ArtVault's platform offers an innovative way for artists to monetiz
 - **Artist Collaboration:** ArtVault facilitates collaboration between artists and collectors, allowing artists to tokenize their creations and engage with a global audience, while collectors can invest in emerging artists and support the art community.
 - **Curation and Discovery:** ArtVault offers curated collections and discovery tools, helping users explore and discover new artworks based on their preferences and interests, fostering a vibrant and engaging art community.
 
-## Getting Started
+## Getting Started 😸
 
 To get started with ArtVault, follow these steps:
 
@@ -23,7 +23,7 @@ To get started with ArtVault, follow these steps:
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
 
-## What we are working upon
+## What we are working upon 😸
 
 Here's what we're working on next:
 
@@ -32,6 +32,6 @@ Here's what we're working on next:
 - Enhancing user experience and accessibility across different platforms.
 - Expanding the collection of tokenized artworks and partnerships with artists and galleries.
 
-## Contact
+## Contact 😸
 
 For any questions or inquiries, please contact us at [calcifer_xoxo@protonmail.com](mailto:calcifer_xoxo@protonmail.com).
