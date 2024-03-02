@@ -1,4 +1,4 @@
-Backend @Artvault
+# Backend @Artvault 🖌️
 
 This folder contains the backend of the Artvault platform, developed using the Hardhat framework.
 Contracts
