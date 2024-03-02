@@ -1,13 +1,15 @@
-# Sample Hardhat Project
+Backend @Artvault
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This folder contains the backend of the Artvault platform, developed using the Hardhat framework.
+Contracts
 
-Try running some of the following tasks:
+The Contracts folder includes the smart contracts required for the platform. These contracts facilitate interactions and manage essential functionalities of the Artvault platform.
+Deployment
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
+To deploy the smart contract yourself, you can use the following command:
+
 ```
+yarn hardhat run scripts/deploy.js --network sepolia
+```
+
+Ensure to modify the deployment script as necessary before executing the command and make sure to change the env script.
