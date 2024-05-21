@@ -57,7 +57,11 @@ export default function Navbar() {
 
   React.useEffect(() => {
     function handleClickOutside(event: any) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (
+        menuRef.current &&
+        event.target &&
+        (menuRef.current as HTMLElement).contains(event.target as Node)
+      ) {
         setIsMenuOpen(false);
       }
     }
