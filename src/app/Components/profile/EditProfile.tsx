@@ -26,7 +26,7 @@ function EditProfile() {
   const [firstname, setFirstName] = React.useState("");
   const [lastname, setLastName] = React.useState("");
   const { address, isConnecting } = useAccount();
-  let { data } = useReadContract({
+  let { data }: any = useReadContract({
     abi: CONTRACT_ABI,
     address: CONTRACT_ADDRESS,
     functionName: "getUser",
@@ -61,8 +61,9 @@ function EditProfile() {
         ) as JWKInterface;
 
         // Upload the file
-        const { id } = await runUpload(wallet, arrayBuffer, contentType);
-        const imageUrl = id ? `https://arweave.net/${id}` : undefined;
+        const value = await runUpload(wallet, arrayBuffer, contentType);
+
+        const imageUrl = value ? `https://arweave.net/${value.id}` : undefined;
         alert(`imageUrl ${imageUrl}`);
       };
       reader.readAsArrayBuffer(file);
@@ -72,9 +73,9 @@ function EditProfile() {
   };
 
   const runUpload = async (
-    key,
-    data,
-    contentType = "image/png",
+    key: any,
+    data: any,
+    contentType = ["Content-Type", "image/png"],
     isUploadByChunk = false
   ) => {
     try {
@@ -93,7 +94,7 @@ function EditProfile() {
       console.log("Wallet balance:", arweaveWalletBalance);
 
       const tx = await arweave.createTransaction({ data: data }, key);
-      tx.addTag("Content-Type", contentType);
+      tx.addTag("Content-Type", contentType[1]);
       console.log("Transaction created:", tx);
 
       await arweave.transactions.sign(tx, key);
@@ -123,7 +124,7 @@ function EditProfile() {
     });
   };
   if (data == undefined) {
-    data = [];
+    data = {};
   }
 
   React.useEffect(() => {
