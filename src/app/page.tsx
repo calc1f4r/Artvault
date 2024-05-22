@@ -11,7 +11,6 @@ import { BadgeEuro } from "lucide-react";
 import { Categorieswords, items, featureswords } from "@/app/contents/contents";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import { useTheme } from "next-themes";
 
 export default function Page() {
   return (
@@ -24,7 +23,7 @@ export default function Page() {
           maxSize={1.4}
           particleDensity={100}
           className="absolute inset-0 z-0"
-          particleColor={"#f2e6fe"}
+          particleColor={"#c084fc"}
         />
         <div className="flex w-full flex-col overflow-hidden relative">
           <ContainerScroll
@@ -44,7 +43,7 @@ export default function Page() {
               height={900}
               width={1800}
               className="mx-auto rounded-2xl object-cover h-full object-left-right"
-              draggable={false}
+              draggable={true}
             />
           </ContainerScroll>
         </div>

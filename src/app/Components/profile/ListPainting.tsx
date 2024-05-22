@@ -6,7 +6,12 @@ import { Input as UIInput } from "@/components/ui/input";
 import { Label as AceternityLabel } from "@/components/aceternityUi/label";
 import Image from "next/image";
 import React from "react";
-
+import { toast } from "sonner";
+import { JWKInterface } from "arweave/node/lib/wallet";
+import { useWaitForTransactionReceipt } from "wagmi";
+import { useWriteContract, useAccount } from "wagmi";
+import Arweave from "arweave";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/Constants/constants";
 const options = [
   "Fine Art",
   "Contemprary Art",
@@ -17,32 +22,142 @@ const options = [
   "Abstract Art",
   "Digital Art",
 ];
+
 function ListPainting() {
+  // Arweave initializations
+  const initOptionsLocal = {
+    host: "localhost",
+    port: 1984,
+    protocol: "http",
+    timeout: 20000,
+    logging: true,
+  };
+
+  const arweave = Arweave.init(initOptionsLocal);
+
+  const arweaveUpload = async (
+    key: any,
+    data: any,
+    contentType: string = "image/png",
+    isUploadByChunk = false
+  ) => {
+    try {
+      // Get wallet address and balance
+      const arweaveWallet = await arweave.wallets.jwkToAddress(key);
+
+      // Sign transaction
+      const arweaveWalletBalance = await arweave.wallets.getBalance(
+        arweaveWallet
+      );
+
+      const tokens = arweave.ar.arToWinston("90");
+
+      await arweave.api.get(`/mint/${arweaveWallet}/${tokens}`);
+
+      const tx = await arweave.createTransaction({ data: data }, key);
+      tx.addTag("Content-Type", contentType[1]);
+
+      await arweave.transactions.sign(tx, key);
+      // Post transaction
+      const response = await arweave.transactions.post(tx);
+
+      // Get transaction status
+      const status = await arweave.transactions.getStatus(tx.id);
+      if (status.status === 200) {
+        toast.success("File has been Uploaded successfully!");
+      } else {
+        toast.error("Transaction has failed!");
+      }
+      return tx;
+    } catch (error) {
+      console.error("Error in upload :", error);
+    }
+  };
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
+  const [isTransactionInProgress, setIsTransactionInProgress] =
+    React.useState<boolean>(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [title, setTitle] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>();
   const [costPerToken, setCostPerToken] = React.useState<number>();
   const [paintingCost, setPaintingCost] = React.useState<number>();
+
   const [category, setCategory] = React.useState<string>();
   const [numberofTokens, setNumberofTokens] = React.useState<number>();
-  const [imageUrl, setImageUrl] = React.useState<string>();
-
-  const submitFile = async () => {
-    console.log(file);
+  const [imageUrl, setImageUrl] = React.useState<string>(
+    "/ArtCategories/imagination.jpg"
+  );
+  const listPainting = () => {
+    writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: CONTRACT_ABI,
+      functionName: "listPainting",
+      args: [
+        paintingCost,
+        numberofTokens,
+        title,
+        category,
+        imageUrl,
+        description,
+      ],
+    });
   };
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
+  React.useEffect(() => {
+    if (isConfirming) {
+      setIsTransactionInProgress(true);
+      toast.info("Transaction is being confirmed!");
+    } else if (isConfirmed) {
+      setIsTransactionInProgress(false);
+      toast.success("Transaction has been confirmed!");
+    }
+  }, [isConfirming, isConfirmed]);
 
   React.useEffect(() => {
     if (numberofTokens && paintingCost) {
       setCostPerToken(paintingCost / numberofTokens);
     }
   }, [numberofTokens, paintingCost]);
+  const handleSubmission = async () => {
+    if (!file) {
+      alert("Please select a file first.");
+      return;
+    }
+    try {
+      const contentType = "image/png";
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const arrayBuffer = reader.result as ArrayBuffer;
+        const wallet = JSON.parse(
+          process.env.NEXT_PUBLIC_ARWEAVE_PRIVATE_KEY!
+        ) as JWKInterface;
+
+        // Upload the file
+        setIsTransactionInProgress(true);
+        const value = await arweaveUpload(wallet, arrayBuffer, contentType);
+        setIsTransactionInProgress(false);
+
+        if (value) {
+          const imageUrl: string = `http://127.0.0.1:1984/${value.id}`;
+          setImageUrl(imageUrl);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="mt-12 w-full lg:flex  justify-center gap-2 items-center p-3">
       <div className="flex flex-col items-center justify-center">
         <div className="border-2 p-3 border-purple-500  shadow-violet-300 ">
           <div className="border-2 p-3 border-purple-300 ">
             <Image
-              src={"/ArtCategories/imagination.jpg"}
+              src={imageUrl}
               alt="Painting design"
               width={400}
               height={400}
@@ -64,7 +179,7 @@ function ListPainting() {
             type="submit"
             onClick={(e) => {
               e.preventDefault();
-              submitFile();
+              handleSubmission();
             }}>
             Upload &rarr;
             <BottomGradient />
@@ -168,7 +283,12 @@ function ListPainting() {
 
           <button
             className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-            type="submit">
+            type="submit"
+            disabled={isTransactionInProgress}
+            onClick={(e) => {
+              e.preventDefault();
+              listPainting();
+            }}>
             List your Paining!!
             <BottomGradient />
           </button>

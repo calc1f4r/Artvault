@@ -6,7 +6,9 @@ import { Paintings } from "@/app/contents/contents";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useAccount } from "wagmi";
+
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/Constants/constants";
+import { useReadContract, useAccount } from "wagmi";
 
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -40,13 +42,35 @@ const menuItems = [
     href: "/about",
   },
 ];
+//localhost:1984/UjtYMb8HOps3OEB_7kcdYgo-6q1mvtF60m6AylzGtVY
 
 export default function Navbar() {
+  const [userProfileImage, setProfileImage] = React.useState<string>(
+    "https://github.com/shadcn.png"
+  );
   const { theme, setTheme } = useTheme();
   const menuRef = React.useRef(null);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const account = useAccount();
+  const { address } = useAccount();
 
+  let { data }: any = useReadContract({
+    abi: CONTRACT_ABI,
+    address: CONTRACT_ADDRESS,
+    functionName: "getProfileImage",
+    account: address,
+  });
+  if (data == undefined) {
+    data = "";
+  }
+
+  React.useEffect(() => {
+    if (data) {
+      console.log("data", data);
+      console.log("data2", userProfileImage);
+      setProfileImage(data);
+      console.log("data2", userProfileImage);
+    }
+  }, [data, userProfileImage]);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -135,10 +159,10 @@ export default function Navbar() {
           </Button>
         </div>
         <w3m-button />
-        {account.address ? (
+        {address ? (
           <Link href={"/profile"}>
             <Avatar className="hover:scale-125 transition-all duration-200 ">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage src={userProfileImage} alt="Userpofile" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </Link>
@@ -185,7 +209,7 @@ export default function Navbar() {
                       {menuItems.map((item) => (
                         <Link
                           key={item.name}
-                          href={item.href}
+                          href={"/about"}
                           className="flex items-center border-b-4 hover:scale-90 rounded-full px-20 py-3 text-sm font-semibold dark:text-white hover:bg-stone-950 hover:text-white transition-all duration-200 dark:hover:scale-110">
                           <span className="ml-3 text-base font-medium ">
                             {item.name}

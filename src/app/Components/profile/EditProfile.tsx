@@ -18,7 +18,7 @@ import { JWKInterface } from "arweave/node/lib/wallet";
 
 function EditProfile() {
   const [file, setFile] = React.useState<File | null>(null);
-  const [imageUrl, setImageUrl] = React.useState<string>();
+  const [imageUrl, setImageUrl] = React.useState<string>("/temp/pfp.jpg");
   const [username, setUsername] = React.useState("");
   const [bio, setBio] = React.useState("");
   const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -50,7 +50,7 @@ function EditProfile() {
       return;
     }
     try {
-      const contentType = ["Content-Type", "image/png"];
+      const contentType = "image/png";
       const reader = new FileReader();
       reader.onload = async () => {
         const arrayBuffer = reader.result as ArrayBuffer;
@@ -61,10 +61,13 @@ function EditProfile() {
         ) as JWKInterface;
 
         // Upload the file
-        const value = await runUpload(wallet, arrayBuffer, contentType);
+        const value = await arweaveUpload(wallet, arrayBuffer, contentType);
 
-        const imageUrl = value ? `https://arweave.net/${value.id}` : undefined;
-        alert(`imageUrl ${imageUrl}`);
+        if (value) {
+          const imageUrl: string = `http://localhost:1984/${value.id}`;
+          console.log(imageUrl);
+          setImageUrl(imageUrl);
+        }
       };
       reader.readAsArrayBuffer(file);
     } catch (error) {
@@ -72,70 +75,71 @@ function EditProfile() {
     }
   };
 
-  const runUpload = async (
+  const arweaveUpload = async (
     key: any,
     data: any,
-    contentType = ["Content-Type", "image/png"],
+    contentType: string = "image/png",
     isUploadByChunk = false
   ) => {
     try {
       // Get wallet address and balance
       const arweaveWallet = await arweave.wallets.jwkToAddress(key);
-      console.log("Wallet address:", arweaveWallet);
 
       // Sign transaction
+      const arweaveWalletBalance = await arweave.wallets.getBalance(
+        arweaveWallet
+      );
 
       const tokens = arweave.ar.arToWinston("90");
 
       await arweave.api.get(`/mint/${arweaveWallet}/${tokens}`);
-      const arweaveWalletBalance = await arweave.wallets.getBalance(
-        arweaveWallet
-      );
-      console.log("Wallet balance:", arweaveWalletBalance);
 
       const tx = await arweave.createTransaction({ data: data }, key);
       tx.addTag("Content-Type", contentType[1]);
-      console.log("Transaction created:", tx);
 
       await arweave.transactions.sign(tx, key);
-      console.log("Transaction signed");
       // Post transaction
       const response = await arweave.transactions.post(tx);
-      console.log("Transaction posted:", response);
 
       // Get transaction status
       const status = await arweave.transactions.getStatus(tx.id);
-      console.log("Transaction status:", status);
-
-      console.log("URL:", `http://localhost:1984/${tx.id}`);
+      if (status.status === 200) {
+        toast.success("File has been Uploaded successfully!");
+      } else {
+        toast.error("Transaction has failed!");
+      }
       return tx;
-      await arweave.api.get("/mine");
     } catch (error) {
-      console.error("Error in runUpload:", error);
+      console.error("Error in upload :", error);
     }
   };
 
-  const updateuser = () => {
-    writeContract({
-      address: CONTRACT_ADDRESS,
-      abi: CONTRACT_ABI,
-      functionName: "updateUser",
-      args: [username, firstname, lastname, bio],
-    });
-  };
   if (data == undefined) {
     data = {};
   }
 
   React.useEffect(() => {
     if (data) {
-      setUsername(data.username);
+      if (data.username) {
+        setUsername(data.username);
+      }
       setLastName(data.lastname);
+      if (data.profileImage) {
+        setImageUrl(data.profileImage);
+      }
       setBio(data.bio);
       setFirstName(data.firstname);
     }
   }, [data]);
 
+  const updateuser = () => {
+    writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: CONTRACT_ABI,
+      functionName: "updateUser",
+      args: [username, firstname, imageUrl, lastname, bio],
+    });
+  };
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
@@ -148,6 +152,7 @@ function EditProfile() {
       toast.success("Transaction has been confirmed!");
     }
   }, [isConfirming, isConfirmed]);
+
   return (
     <>
       <main className="mt-12 w-full lg:flex justify-center gap-7 items-center p-3">
@@ -156,11 +161,12 @@ function EditProfile() {
             <div className="border-2 p-3 border-purple-500 rounded-full shadow-violet-300 ">
               <div className="border-2 p-3 border-purple-300 rounded-full ">
                 <Image
-                  src={"/temp/pfp.jpg"}
+                  src={imageUrl}
                   alt="pfp"
                   width={200}
                   height={200}
-                  className="rounded-full border-3 darken shadow-xl"></Image>
+                  className="rounded-full border-3 darken shadow-xl"
+                />
               </div>
             </div>
             <div className="mt-5 flex flex-col justify-center items-center gap-6">
@@ -176,7 +182,6 @@ function EditProfile() {
                 className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-950 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-900 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
                 type="submit"
                 onClick={(e) => {
-                  e.preventDefault();
                   handleSubmission();
                 }}>
                 Upload &rarr;
@@ -219,7 +224,7 @@ function EditProfile() {
                 }}
                 value={username}
                 id="username"
-                placeholder="project@gmail.com"
+                placeholder="@calc1f4r"
                 type="text"
               />
             </LabelInputContainer>

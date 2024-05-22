@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xd8c622e7506d18a1b6e107293bce885477d8ec1d";
+export const CONTRACT_ADDRESS = "0x078718ddf1675c78e19f86c76f6a6f3cdaaadb97";
 export const CONTRACT_ABI = [
   {
     anonymous: false,
@@ -49,7 +49,7 @@ export const CONTRACT_ABI = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "numberOfTokensTransfered",
+        name: "numberOfTokensTransferred",
         type: "uint256",
       },
       {
@@ -80,7 +80,7 @@ export const CONTRACT_ABI = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "numberOfTokensTransfered",
+        name: "numberOfTokensTransferred",
         type: "uint256",
       },
       {
@@ -116,68 +116,6 @@ export const CONTRACT_ABI = [
     inputs: [
       {
         indexed: true,
-        internalType: "uint256",
-        name: "productId",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "reviewer",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "rating",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "comment",
-        type: "string",
-      },
-    ],
-    name: "ReviewAdded",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "productId",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "reviewIndex",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "liker",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "likes",
-        type: "uint256",
-      },
-    ],
-    name: "ReviewLiked",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         internalType: "address",
         name: "userAddress",
         type: "address",
@@ -189,7 +127,7 @@ export const CONTRACT_ABI = [
         type: "uint256",
       },
     ],
-    name: "userCreated",
+    name: "UserCreated",
     type: "event",
   },
   {
@@ -226,36 +164,8 @@ export const CONTRACT_ABI = [
         type: "string",
       },
     ],
-    name: "userUpdated",
+    name: "UserUpdated",
     type: "event",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "productId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "rating",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "comment",
-        type: "string",
-      },
-      {
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-    ],
-    name: "addReview",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
   },
   {
     inputs: [
@@ -263,11 +173,6 @@ export const CONTRACT_ABI = [
         internalType: "uint256",
         name: "id",
         type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "buyer",
-        type: "address",
       },
       {
         internalType: "uint256",
@@ -282,77 +187,31 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: "getAllPaintings",
+    name: "getAllPaintingIds",
     outputs: [
       {
-        components: [
-          {
-            internalType: "uint256",
-            name: "paintingId",
-            type: "uint256",
-          },
-          {
-            internalType: "address",
-            name: "owner",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "price",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "PaintingTitle",
-            type: "string",
-          },
-          {
-            internalType: "uint256",
-            name: "numberOfTokens",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "category",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "images",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "description",
-            type: "string",
-          },
-          {
-            internalType: "uint256",
-            name: "eachTokenPrice",
-            type: "uint256",
-          },
-          {
-            internalType: "address[]",
-            name: "reviewers",
-            type: "address[]",
-          },
-          {
-            internalType: "string[]",
-            name: "reviews",
-            type: "string[]",
-          },
-        ],
-        internalType: "struct Artvault.Painting[]",
+        internalType: "uint256[]",
         name: "",
-        type: "tuple[]",
+        type: "uint256[]",
       },
     ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [],
-    name: "getHighestRatedPainting",
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "paintingId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "getOwnedTokens",
     outputs: [
       {
         internalType: "uint256",
@@ -375,94 +234,66 @@ export const CONTRACT_ABI = [
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "paintingId",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "",
+        name: "price",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "paintingTitle",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "numberOfTokens",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "",
+        name: "tokensAvailable",
         type: "uint256",
       },
       {
+        internalType: "string",
+        name: "category",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "images",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
         internalType: "uint256",
-        name: "",
+        name: "eachTokenPrice",
         type: "uint256",
       },
       {
         internalType: "address",
-        name: "",
+        name: "originalOwner",
         type: "address",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
       },
     ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "productId",
-        type: "uint256",
-      },
-    ],
-    name: "getPaintingsReview",
+    inputs: [],
+    name: "getProfileImage",
     outputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "reviewer",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "productId",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "rating",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "comment",
-            type: "string",
-          },
-          {
-            internalType: "uint256",
-            name: "likes",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct Artvault.Review[]",
+        internalType: "string",
         name: "",
-        type: "tuple[]",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -491,6 +322,11 @@ export const CONTRACT_ABI = [
           },
           {
             internalType: "string",
+            name: "profileImage",
+            type: "string",
+          },
+          {
+            internalType: "string",
             name: "firstname",
             type: "string",
           },
@@ -510,141 +346,28 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: "getUserPainting",
+    name: "getUserListedPaintingIds",
     outputs: [
       {
-        components: [
-          {
-            internalType: "uint256",
-            name: "paintingId",
-            type: "uint256",
-          },
-          {
-            internalType: "address",
-            name: "owner",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "price",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "PaintingTitle",
-            type: "string",
-          },
-          {
-            internalType: "uint256",
-            name: "numberOfTokens",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "category",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "images",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "description",
-            type: "string",
-          },
-          {
-            internalType: "uint256",
-            name: "eachTokenPrice",
-            type: "uint256",
-          },
-          {
-            internalType: "address[]",
-            name: "reviewers",
-            type: "address[]",
-          },
-          {
-            internalType: "string[]",
-            name: "reviews",
-            type: "string[]",
-          },
-        ],
-        internalType: "struct Artvault.Painting[]",
+        internalType: "uint256[]",
         name: "",
-        type: "tuple[]",
+        type: "uint256[]",
       },
     ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-    ],
-    name: "getUserReviews",
+    inputs: [],
+    name: "getUserPaintingIds",
     outputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "reviewer",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "productId",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "rating",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "comment",
-            type: "string",
-          },
-          {
-            internalType: "uint256",
-            name: "likes",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct Artvault.Review[]",
+        internalType: "uint256[]",
         name: "",
-        type: "tuple[]",
+        type: "uint256[]",
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "productId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "reviewIndex",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-    ],
-    name: "likeReview",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -705,19 +428,6 @@ export const CONTRACT_ABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "reviewsCounter",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -738,55 +448,6 @@ export const CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "_productId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_price",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_numberOfTokens",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "_paintingTitle",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_category",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_images",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_description",
-        type: "string",
-      },
-    ],
-    name: "updatePainting",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "string",
         name: "username",
         type: "string",
@@ -794,6 +455,11 @@ export const CONTRACT_ABI = [
       {
         internalType: "string",
         name: "firstname",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "profileImage",
         type: "string",
       },
       {
