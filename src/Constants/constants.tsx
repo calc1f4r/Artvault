@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0x078718ddf1675c78e19f86c76f6a6f3cdaaadb97";
+export const CONTRACT_ADDRESS = "0xe1842488e99d33927c9824ffe5ba1556719ba5ac";
 export const CONTRACT_ABI = [
   {
     anonymous: false,
@@ -186,32 +186,39 @@ export const CONTRACT_ABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "getAllPaintingIds",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
-        name: "paintingId",
+        name: "_price",
         type: "uint256",
       },
       {
-        internalType: "address",
-        name: "owner",
-        type: "address",
+        internalType: "uint256",
+        name: "_numberOfTokens",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "_paintingTitle",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_category",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_images",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_description",
+        type: "string",
       },
     ],
-    name: "getOwnedTokens",
+    name: "listPainting",
     outputs: [
       {
         internalType: "uint256",
@@ -219,7 +226,7 @@ export const CONTRACT_ABI = [
         type: "uint256",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -229,58 +236,276 @@ export const CONTRACT_ABI = [
         name: "id",
         type: "uint256",
       },
-    ],
-    name: "getPainting",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "paintingId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "price",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "paintingTitle",
-        type: "string",
-      },
       {
         internalType: "uint256",
         name: "numberOfTokens",
         type: "uint256",
       },
+    ],
+    name: "sellPaintingToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "username",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "firstname",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "profileImage",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "lastname",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "bio",
+        type: "string",
+      },
+    ],
+    name: "updateUser",
+    outputs: [
       {
         internalType: "uint256",
-        name: "tokensAvailable",
+        name: "",
         type: "uint256",
       },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getAllPaintings",
+    outputs: [
       {
-        internalType: "string",
-        name: "category",
-        type: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "tokensOwnedByViewer",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "totalCostOfPainting",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "originalOwner",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "originalOwnerUsername",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "paintingId",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "category",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "images",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "eachTokenPrice",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "paintingTitle",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "description",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "totalTokens",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "availableTokens",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Artvault.PaintingInfo[]",
+        name: "",
+        type: "tuple[]",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPaintingsListedByUser",
+    outputs: [
       {
-        internalType: "string",
-        name: "images",
-        type: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "tokensOwnedByViewer",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "totalCostOfPainting",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "originalOwner",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "originalOwnerUsername",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "paintingId",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "category",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "images",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "eachTokenPrice",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "paintingTitle",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "description",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "totalTokens",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "availableTokens",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Artvault.PaintingInfo[]",
+        name: "",
+        type: "tuple[]",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPaintingsOwnedByUser",
+    outputs: [
       {
-        internalType: "string",
-        name: "description",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "eachTokenPrice",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "originalOwner",
-        type: "address",
+        components: [
+          {
+            internalType: "uint256",
+            name: "tokensOwnedByViewer",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "totalCostOfPainting",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "originalOwner",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "originalOwnerUsername",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "paintingId",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "category",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "images",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "eachTokenPrice",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "paintingTitle",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "description",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "totalTokens",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "availableTokens",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Artvault.PaintingInfo[]",
+        name: "",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -346,76 +571,6 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: "getUserListedPaintingIds",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getUserPaintingIds",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_price",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_numberOfTokens",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "_paintingTitle",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_category",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_images",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_description",
-        type: "string",
-      },
-    ],
-    name: "listPainting",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "paintingIndex",
     outputs: [
       {
@@ -425,63 +580,6 @@ export const CONTRACT_ABI = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "numberOfTokens",
-        type: "uint256",
-      },
-    ],
-    name: "sellPaintingToken",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "username",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "firstname",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "profileImage",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "lastname",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "bio",
-        type: "string",
-      },
-    ],
-    name: "updateUser",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {

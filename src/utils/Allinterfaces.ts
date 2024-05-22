@@ -1,12 +1,14 @@
-export interface PaintingInterface {
+export interface PaintingInfo {
+  tokensOwnedByViewer: number;
+  totalCostOfPainting: number;
+  originalOwner: string;
+  originalOwnerUsername: string;
   paintingId: number;
-  price: number;
-  paintingTitle: string;
-  numberOfTokens: number;
-  tokensAvailable: number;
   category: string;
   images: string;
-  description: string;
   eachTokenPrice: number;
-  originalOwner: string;
+  paintingTitle: string;
+  description: string;
+  totalTokens: number;
+  availableTokens: number;
 }

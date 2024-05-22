@@ -198,6 +198,7 @@ function EditProfile() {
                 onChange={(e) => {
                   setFirstName(e.target.value);
                 }}
+                required={true}
                 value={firstname}
                 id="firstname"
                 placeholder="Tyler"
@@ -207,6 +208,7 @@ function EditProfile() {
             <LabelInputContainer>
               <AceternityLabel htmlFor="lastname">Last name</AceternityLabel>
               <AceternityInput
+                required={true}
                 onChange={(e) => {
                   setLastName(e.target.value);
                 }}
@@ -219,6 +221,7 @@ function EditProfile() {
             <LabelInputContainer>
               <AceternityLabel htmlFor="username">Username</AceternityLabel>
               <AceternityInput
+                required={true}
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}

@@ -65,10 +65,7 @@ export default function Navbar() {
 
   React.useEffect(() => {
     if (data) {
-      console.log("data", data);
-      console.log("data2", userProfileImage);
       setProfileImage(data);
-      console.log("data2", userProfileImage);
     }
   }, [data, userProfileImage]);
   const toggleMenu = () => {
