@@ -4,6 +4,7 @@ ArtVault aims to bring transparency and efficiency to the art market by creating
 
 Furthermore, ArtVault's platform offers an innovative way for artists to monetize their work through the creation of digital shares. This allows them to retain ownership of their artwork while still benefiting from its appreciation in value.
 
+
 ## Features 😸
 
 - **Transparency and Immutability:** ArtVault's blockchain-based solution offers transparent and immutable ownership records, providing assurance of provenance and authenticity for art collectors and investors.
@@ -13,6 +14,12 @@ Furthermore, ArtVault's platform offers an innovative way for artists to monetiz
 - **Smart Contracts:** ArtVault employs smart contracts to automate transactions, ensuring secure and efficient processes without the need for intermediaries.
 - **Curation and Discovery:** ArtVault offers curated collections and discovery tools, helping users explore and discover new artworks based on their preferences and interests, fostering a vibrant and engaging art community.
 - **Arweave Integration:** ArtVault uses Arweave for secure, permanent storage of artwork images, ensuring they are never lost.
+
+### Working Demo 💥
+
+
+https://github.com/calc1f4r/Artvault/assets/74751675/d93f18ef-16aa-47fb-954f-29d67041d2a3
+
 
 ### How It Works 😸
 
