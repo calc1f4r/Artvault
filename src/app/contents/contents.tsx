@@ -58,7 +58,7 @@ export const items = [
       </div>
     ),
     icon: <IconPaint className="h-4 w-4 text-neutral-500" />,
-    href: "/fine-art",
+    href: "/",
   },
   {
     title: "Contemporary Art",
@@ -76,7 +76,7 @@ export const items = [
       </div>
     ),
     icon: <IconPaint className="h-4 w-4 text-neutral-500" />,
-    href: "/fine-art",
+    href: "/",
   },
   {
     title: "Old Masters: ",
@@ -93,7 +93,7 @@ export const items = [
       </div>
     ),
     icon: <IconPaint className="h-4 w-4 text-neutral-500" />,
-    href: "/fine-art",
+    href: "/",
   },
   {
     title: "Decorative Art",
@@ -111,7 +111,7 @@ export const items = [
       </div>
     ),
     icon: <IconPaint className="h-4 w-4 text-neutral-500" />,
-    href: "/fine-art",
+    href: "/",
   },
   {
     title: "Regional and Folk Art",
@@ -129,7 +129,7 @@ export const items = [
       </div>
     ),
     icon: <IconPaint className="h-4 w-4 text-neutral-500" />,
-    href: "/fine-art",
+    href: "/",
   },
   {
     title: "The Joy of Creation",
@@ -146,7 +146,7 @@ export const items = [
       </div>
     ),
     icon: <IconPaint className="h-4 w-4 text-neutral-500" />,
-    href: "/fine-art",
+    href: "/",
   },
   {
     title: "The Spirit of Adventure",
@@ -163,7 +163,7 @@ export const items = [
       </div>
     ),
     icon: <IconPaint className="h-4 w-4 text-neutral-500" />,
-    href: "/fine-art",
+    href: "/",
   },
 
   {

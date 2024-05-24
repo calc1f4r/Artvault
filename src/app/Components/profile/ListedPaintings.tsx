@@ -31,12 +31,11 @@ function ListedPaintings() {
   useEffect(() => {
     if (data) {
       setPaintings(data);
-      console.log(data);
     }
   }, [paintings, data]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-4 p-2  overflow-hidden">
+    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-4 p-2 overflow-hidden">
       {paintings.map((painting, index) => (
         <PaintingCard
           key={index}
@@ -90,6 +89,7 @@ const PaintingCard: React.FC<PaintingCardProps> = ({
   ownerAddress,
   id,
 }) => {
+  console.log("image url", imageUrl);
   return (
     <CardContainer className="inter-var">
       <CardBody className="bg-gray-50  group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
