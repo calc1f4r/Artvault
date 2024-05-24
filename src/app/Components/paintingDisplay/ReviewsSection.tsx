@@ -46,10 +46,6 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    addReview();
-  };
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
@@ -89,8 +85,9 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({
             <button
               className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 mt-2 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] px-3"
               type="submit"
-              onSubmit={(e) => {
-                handleSubmit(e);
+              onClick={(e) => {
+                e.preventDefault();
+                addReview();
               }}>
               Submit Review &rarr;
               <BottomGradient />
@@ -140,7 +137,12 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({
         </form>
         <div className="space-y-4">
           {reviews.map((review, index) => (
-            <ReviewCard key={index} review={review} id={id} reviewId={index} />
+            <ReviewCard
+              key={index}
+              review={review}
+              paintingid={id}
+              reviewId={index}
+            />
           ))}
         </div>
       </div>
@@ -150,13 +152,17 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({
 
 interface ReviewCardProps {
   review: any;
-  id: number;
+  paintingid: number;
   reviewId: number;
 }
 
 export default ReviewsSection;
 
-const ReviewCard: React.FC<ReviewCardProps> = ({ review, id, reviewId }) => {
+const ReviewCard: React.FC<ReviewCardProps> = ({
+  review,
+  paintingid,
+  reviewId,
+}) => {
   const { data: hash, error, isPending, writeContract } = useWriteContract();
   const account = useAccount();
   const likeReview = () => {
@@ -164,9 +170,10 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review, id, reviewId }) => {
       address: CONTRACT_ADDRESS,
       abi: CONTRACT_ABI,
       functionName: "likeReview",
-      args: [id, reviewId],
+      args: [paintingid, reviewId + 1],
     });
   };
+  console.log(paintingid, reviewId);
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
@@ -197,13 +204,15 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review, id, reviewId }) => {
                 {review.reviewerUsername}
               </p>
               <p className="text-sm">
-                <time dateTime="2022-02-08" title="February 8th, 2022">
-                  {review.date}
+                <time
+                  dateTime={review.date}
+                  title={new Date(review.date).toLocaleDateString()}>
+                  {new Date(review.date).toISOString().split("T")[0]}
                 </time>
               </p>
             </div>
             <div className="flex gap-1">
-              {[...Array(review.rating)].map((_, i) => (
+              {[...Array(Number(review.rating))].map((_, i) => (
                 <svg
                   key={i}
                   className="w-4 h-4 text-yellow-300"
@@ -218,17 +227,16 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review, id, reviewId }) => {
       </div>
       <p>{review.comment}</p>
       <div className="flex mt-3 items-center gap-2">
-        <button>
-          <button
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              likeReview();
-            }}>
-            Like
-          </button>
+        <button
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            likeReview();
+          }}>
           <Heart className="w-5 h-5 text-red-900 text-bold hover:scale-125 active:scale-150 ease-in duration-100" />
         </button>
-        <span className="text-sm font-semibold">Liked by {review.likes}</span>
+        <span className="text-sm font-semibold">
+          Liked by {Number(review.likes)}
+        </span>
       </div>
     </article>
   );

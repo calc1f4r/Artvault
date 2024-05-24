@@ -29,7 +29,21 @@ interface Review {
 }
 
 function Painting({ params }: any) {
-  const [paintingInfo, setPaintingsInfo] = React.useState<PaintingInfo>({});
+  const [paintingInfo, setPaintingsInfo] = React.useState<PaintingInfo>({
+    artistImage: "",
+    availableTokens: BigInt(0),
+    category: "",
+    description: "",
+    eachTokenPrice: BigInt(0),
+    images: "",
+    originalOwner: "",
+    originalOwnerUsername: "",
+    paintingId: BigInt(0),
+    paintingTitle: "",
+    rating: BigInt(0),
+    totalCostOfPainting: BigInt(0),
+    totalTokens: BigInt(0),
+  });
   const [reviews, setReviews] = React.useState<Review[]>([]);
   const { address, isConnecting } = useAccount();
 
@@ -59,7 +73,7 @@ function Painting({ params }: any) {
   console.log(reviews);
   React.useEffect(() => {
     if (reviewData) {
-      setReviews(reviewData);
+      setReviews(reviewData as Review[]);
     }
   }, [reviewData]);
 
@@ -79,9 +93,13 @@ function Painting({ params }: any) {
         category={paintingInfo.category}
         description={paintingInfo.description}
         rating={Number(paintingInfo.rating)}
-        reviewsCount={Number(paintingInfo.rating)}
+        reviewsCount={Number(reviewCount)}
       />
-      <ReviewsSection reviews={reviews} reviewCount={reviewCount} id={1} />
+      <ReviewsSection
+        reviews={reviews}
+        reviewCount={reviewCount}
+        id={Number(params.id)}
+      />
     </>
   );
 }

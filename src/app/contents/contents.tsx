@@ -227,46 +227,46 @@ export const Paintings: {
 }[] = [
   {
     title: "Fine Art",
-    href: "/docs/primitives/alert-dialog",
+    href: "/paintings/",
     description:
       "where creativity meets mastery, transcending time with each stroke.",
   },
   {
     title: "Contemporary Art",
-    href: "/docs/primitives/hover-card",
+    href: "/paintings/",
     description:
       "the mirror reflecting today's world, pushing boundaries and provoking thought.ive power of technology.",
   },
   {
     title: "Old Masters",
-    href: "/docs/primitives/progress",
+    href: "/paintings/",
     description: "Timeless treasures echoing the mastery of bygone eras.",
   },
   {
     title: "Decorative Art",
-    href: "/docs/primitives/scroll-area",
+    href: "/paintings/",
     description:
       "Where beauty meets function, adding soul to everyday spaces..",
   },
   {
     title: "Regional and Folk Art",
-    href: "/docs/primitives/tabs",
+    href: "/paintings/",
     description:
       "Cultural narratives painted with the colors of tradition and heritage.",
   },
   {
     title: "The Joy of Creation",
-    href: "/docs/primitives/tooltip",
+    href: "/paintings/",
     description: "Where imagination dances on the canvas of possibility",
   },
   {
     title: "The Spirit of Adventure",
-    href: "/docs/primitives/tooltip",
+    href: "/paintings/",
     description: "Where the brush explores uncharted realms of creativity",
   },
   {
     title: "Digital Art",
-    href: "/docs/primitives/tooltip",
+    href: "/paintings/",
     description:
       "Art that leverages digital technology as an essential part of the creative process.",
   },

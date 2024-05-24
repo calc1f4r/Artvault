@@ -15,7 +15,7 @@ import { useWaitForTransactionReceipt } from "wagmi";
 import { useWriteContract, useAccount } from "wagmi";
 import { toast } from "sonner";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/Constants/constants";
-import { parseEther } from "ethers/utils";
+import { parseEther, formatEther } from "ethers/utils";
 
 interface PaintingDisplayProps {
   paintingId: number;
@@ -50,10 +50,10 @@ const PaintingDisplay: React.FC<PaintingDisplayProps> = ({
 }) => {
   console.log("available tokens");
   const [tokenNumber, setTokenNumber] = React.useState<number>(
-    Number(availableTokens / 2)
+    Math.round(availableTokens) / 2
   );
   React.useEffect(() => {
-    setTokenNumber(Number(availableTokens / 2));
+    setTokenNumber(Number(Math.floor(availableTokens) / 2));
   }, [availableTokens]);
   const { address, isConnecting } = useAccount();
   const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -63,9 +63,13 @@ const PaintingDisplay: React.FC<PaintingDisplayProps> = ({
       abi: CONTRACT_ABI,
       functionName: "buyPaintingToken",
       args: [BigInt(paintingId), BigInt(tokenNumber)],
-      value: parseEther((0.01 * 100000).toString()),
+      value: parseEther(weiToEther(tokenPrice * tokenNumber).toString()),
     });
   };
+  function weiToEther(weiValue: number | string) {
+    const etherValue = formatEther(weiValue);
+    return etherValue;
+  }
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
